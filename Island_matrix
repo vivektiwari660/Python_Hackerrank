@@ -1,0 +1,44 @@
+def numIslands(grid):
+        if not grid or len(grid) == 0:
+            return 0
+        rows,cols = len(grid), len(grid[0])
+        count = 0
+        island_list = []
+        #queue = []       
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == 1: 
+                    count += 1
+                    #print(count)
+                    queue = []
+                    queue1=[]# store index of nodes with value '1'
+                    queue.append([row,col])
+                    
+                    #print(queue)
+                    while queue:
+                        r, c = queue.pop(0)
+                        queue1.append([r,c])
+                        
+                        #print(r,c)
+                        if grid[r][c] == 0: 
+                            continue
+                        else:
+                            grid[r][c] = 0
+                            if r > 0 and grid[r-1][c] == 1:
+                                queue.append([r-1,c])
+                            if r < rows-1 and grid[r+1][c] == 1:
+                                queue.append([r+1, c])
+                            if c > 0 and grid[r][c-1] == 1:
+                                queue.append([r,c-1])
+                            if c < cols -1 and grid[r][c+1] == 1:
+                                queue.append([r,c+1])
+                    #print(queue1)
+                    island_list.append(queue1)
+        return island_list
+grid=[[1,1,1,0,1],[1,1,0,1,0],[1,1,0,0,0],[1,1,1,0,0]]
+grid1=[[1,1,1,0,1],[1,1,0,1,0],[1,0,0,0,0],[1,1,1,0,0]]
+grid1_list=numIslands(grid)
+grid2_list =numIslands(grid1)
+print(grid1_list, grid2_list, sep='\n')
+new1 = [x for x in grid1_list if x in grid2_list]
+print(len(new1))
